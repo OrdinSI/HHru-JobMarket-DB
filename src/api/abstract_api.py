@@ -8,3 +8,9 @@ class Api(ABC):
     def get_vacancies(self, request):
         """Получение вакансий с разных платформ"""
         pass
+
+
+    @abstractmethod
+    def get_id_employers(self, request):
+        """Получение id компаний с разных платформ"""
+        pass
