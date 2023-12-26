@@ -1,11 +1,17 @@
 from typing import Any, Dict
 
 
-def extract_employer_id(data: Dict[str, Any]) -> int:
+def extract_employer(datas: Dict[str, Any]) -> int:
     """Функция для извлечения id компании из запроса"""
-    items = data.get('items', [])
-    if items and isinstance(items, list) and isinstance(items[0], dict):
-        employer_id = items[0].get('id', '')
-        if employer_id.isdigit():
-            return int(employer_id)
-    return 0
+    for data in datas.get('items', []):
+        if data and isinstance(data, list) and isinstance(data[0], dict):
+            employer_id = data[0].get('id', '')
+            employer_name = data[0].get('name', '')
+            employer_url = data[0].get('alternate_url', '')
+            employer_vacancies_url = data[0].get('vacancies_url', '')
+            employer_vacancies = data[0].get('open_vacancies', 0)
+            if employer_id.isdigit():
+                return int(employer_id)
+        return 0
+
+
