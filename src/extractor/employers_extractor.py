@@ -10,7 +10,7 @@ class EmployersExtractor(Extractor):
         for request, data in datas.items():
             items = data.get('items', [])
             for item in items:
-                if data and isinstance(item, dict):
+                if item and isinstance(item, dict):
                     employer_id = item.get('id')
                     employer_name = item.get('name')
                     employer_url = item.get('alternate_url', '')
