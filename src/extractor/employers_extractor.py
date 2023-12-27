@@ -7,26 +7,26 @@ class EmployersExtractor(Extractor):
 
     def extract_data(self, datas):
         """Функция для извлечения данных компании из запроса"""
-        for data in datas.get('items', []):
-            if data and isinstance(data, dict):
-                employer_id = data.get('id', '')
-                employer_name = data.get('name', '')
-                employer_url = data.get('alternate_url', '')
-                employer_vacancies_url = data.get('vacancies_url', '')
-                employer_vacancies = data.get('open_vacancies', 0)
-                self.employers[employer_id] = {
-                    'name': employer_name,
-                    'url': employer_url,
-                    'vacancies_url': employer_vacancies_url,
-                    'open_vacancies': employer_vacancies
-                }
+        for request, data in datas.items():
+            items = data.get('items', [])
+            for item in items:
+                if data and isinstance(item, dict):
+                    employer_id = item.get('id')
+                    employer_name = item.get('name')
+                    employer_url = item.get('alternate_url', '')
+                    employer_vacancies_url = item.get('vacancies_url')
+                    employer_vacancies = item.get('open_vacancies', 0)
+                    self.employers[employer_id] = {
+                        'name': employer_name,
+                        'url': employer_url,
+                        'vacancies_url': employer_vacancies_url,
+                        'open_vacancies': employer_vacancies
+                    }
 
         return self.employers
 
-    def get_data(self):
-        pass
-
     def get_employer_vacancies_url(self):
+        """Функция для извлечения данных url для запроса"""
         vacancies_url = []
         for employer_id, employer_info in self.employers.items():
             if employer_info['open_vacancies'] != 0:

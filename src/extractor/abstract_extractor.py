@@ -6,7 +6,3 @@ class Extractor(ABC):
     @abstractmethod
     def extract_data(self, datas):
         pass
-
-    @abstractmethod
-    def get_data(self):
-        pass

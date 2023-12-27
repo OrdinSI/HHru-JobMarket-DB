@@ -26,11 +26,18 @@ class HeadHunterApi(Api):
         except Exception as e:
             logging.error(f"Ошибка при получении вакансий с HeadHunter: {e}")
 
-    def get_employer(self, request: str) -> Dict[str, Any]:
+    def get_employer(self, requests_e: List[str]) -> Dict[str, Any]:
         """Получение id компаний с HeadHunter по запросу"""
+        employers = {}
         try:
-            params = dict(text=request, only_with_vacancies=True)
-            res = requests.get('https://api.hh.ru/employers', params=params)
-            return res.json()
+            for request in requests_e:
+                params = dict(text=request, only_with_vacancies=True)
+                res = requests.get('https://api.hh.ru/employers', params=params)
+                if res.ok:
+                    employers[request] = res.json()
+                    time.sleep(1)
+                else:
+                    logging.error(f"Запрос {request} вернул статус {res.status_code}")
+            return employers
         except Exception as e:
             logging.error(f"Ошибка при получении id компаний с HeadHunter: {e}")
