@@ -46,7 +46,7 @@ class DBManager:
                     rows = cursor.fetchall()
                     return rows
         except Exception as e:
-            logging.error(f"Произошла ошибка при получении списка всех вакансий: {e}")
+            logging.error(f"Произошла ошибка при получении среднюю зарплаты по вакансиям: {e}")
 
     def get_vacancies_with_higher_salary(self):
         """ Получает список всех вакансий, у которых зарплата выше средней по всем вакансиям"""
@@ -57,7 +57,7 @@ class DBManager:
                     rows = cursor.fetchall()
                     return rows
         except Exception as e:
-            logging.error(f"Произошла ошибка при получении списка всех вакансий: {e}")
+            logging.error(f"Произошла ошибка при получении списка всех вакансий у которых зарплата выше средней: {e}")
 
     def get_vacancies_with_keyword(self, keyword: str):
         """ Получает список всех вакансий, в названии которых содержатся переданные в метод слова"""
@@ -81,5 +81,5 @@ class DBManager:
                     rows = cursor.fetchall()
                     return rows
         except Exception as e:
-            logging.error(f"Произошла ошибка при получении списка всех вакансий: {e}")
+            logging.error(f"Произошла ошибка при получении списка всех компаний: {e}")
 
