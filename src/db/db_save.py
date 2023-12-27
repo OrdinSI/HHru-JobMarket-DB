@@ -24,8 +24,8 @@ class DBSave:
                 with self.conn:
                     with self.conn.cursor() as cursor:
                         cursor.execute(query, values)
-                logging.info("Успешное добавление в таблицу employers.")
+                logging.info(f"Успешное добавление в таблицу {table_name}.")
             return True
         except Exception as e:
-            logging.error(f"Произошла ошибка при добавлении данных в таблицу employers: {e}")
+            logging.error(f"Произошла ошибка при добавлении данных в таблицу {table_name}: {e}")
             return False

@@ -24,7 +24,7 @@ CREATE TABLE vacancies
     vacancies_id varchar(100) PRIMARY KEY,
     employers_id varchar(100) REFERENCES employers(employers_id) NOT NULL,
     name varchar(255) NOT NULL,
-    salary int NOT NULL,
+    salary int,
     requirement text,
     responsibility text,
     area varchar(255),
