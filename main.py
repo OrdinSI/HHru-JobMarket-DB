@@ -34,9 +34,11 @@ def user_interaction(conn_db):
     request_e = search_query.lower().split()
     hh_api = HeadHunterApi()
     data_employer = hh_api.get_employer(request_e)
+    print(data_employer)
     if data_employer:
         employers_extractor = EmployersExtractor()
         employers = employers_extractor.extract_data(data_employer)
+        print(employers)
         save = DBSave(conn_db)
         save_employers = save.data_saving("employers", employers)
         # if employers:
