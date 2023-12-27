@@ -4,9 +4,8 @@ import psycopg2
 from dotenv import load_dotenv
 from src.api.hh_api import HeadHunterApi
 from src.utils.colors import Colors
-from src.utils.employer_id_extractor import extract_employer_id
-from src.db.db_save import DBSave
-
+from src.extractor.employers_extractor import EmployersExtractor
+from src.extractor.vacancies_extractor import VacanciesExtractor
 
 
 
@@ -33,13 +32,20 @@ def user_interaction(conn_db):
     search_query = Colors.input_cyan("Пожалуйста, введите ваш поисковый запрос: ")
 
     hh_api = HeadHunterApi()
-    data_employer = hh_api.get_id_employers(search_query.lower())
+    data_employer = hh_api.get_employer(search_query.lower())
+
     if data_employer:
-        db_save = DBSave(conn_db)
-        db_save.data_saving(data_employer)
-        employer_id = extract_employer_id(data_employer)
-        if employer_id != 0:
-            vacancies = hh_api.get_vacancies(employer_id)
+        employers_extractor = EmployersExtractor()
+        employers = employers_extractor.extract_data(data_employer)
+        if employers:
+            vacancies_url = employers_extractor.get_employer_vacancies_url()
+            vacancies_data = hh_api.get_vacancies(vacancies_url)
+            print(vacancies_data)
+            # if vacancies_data:
+            #     vacancies_extractor = VacanciesExtractor()
+            #     vacancies = vacancies_extractor.extract_data(vacancies_data)
+
+
         else:
             Colors.print_red("К сожалению не возможно получить информацию о данной компании")
     else:

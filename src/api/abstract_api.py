@@ -11,6 +11,6 @@ class Api(ABC):
 
 
     @abstractmethod
-    def get_id_employers(self, request):
+    def get_employer(self, request):
         """Получение id компаний с разных платформ"""
         pass
