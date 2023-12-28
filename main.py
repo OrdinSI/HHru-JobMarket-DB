@@ -111,7 +111,7 @@ def user_interaction(conn_db):
             # Список всех вакансий, у которых зарплата выше средней по всем вакансиям.
             avg_vacancies = db_manager.get_vacancies_with_higher_salary()
             for vacancy in avg_vacancies:
-                Colors.print_blue(AVG_VACANCIES.format(vacancy[0]))
+                Colors.print_blue(AVG_VACANCIES.format(vacancy[0], vacancy[1]))
 
         elif choice == "7":
             # Поиск по ключевому слову в описании вакансий.

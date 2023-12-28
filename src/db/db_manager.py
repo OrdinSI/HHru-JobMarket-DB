@@ -53,7 +53,7 @@ class DBManager:
         try:
             with self.conn:
                 with self.conn.cursor() as cursor:
-                    cursor.execute('SELECT name FROM vacancies WHERE salary > (SELECT AVG(salary) FROM vacancies)')
+                    cursor.execute('SELECT name, url FROM vacancies WHERE salary > (SELECT AVG(salary) FROM vacancies)')
                     rows = cursor.fetchall()
                     return rows
         except Exception as e:
