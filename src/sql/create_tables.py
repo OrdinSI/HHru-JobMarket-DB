@@ -1,6 +1,5 @@
 import logging
 import os
-
 import psycopg2
 from dotenv import load_dotenv
 
@@ -20,10 +19,9 @@ def create_tables(conn_db):
     try:
         with conn_db:
             with conn_db.cursor() as cursor:
-                with open('sql/create_tables.sql') as f:
+                with open('./create_tables.sql') as f:
                     sql_script = f.read()
                 cursor.execute(sql_script)
-                logging.info(f"Успешное создание таблиц.")
 
     except Exception as e:
         logging.error(f"Произошла ошибка при создании таблиц: {e}")
