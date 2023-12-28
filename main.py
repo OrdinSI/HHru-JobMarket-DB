@@ -124,6 +124,8 @@ def user_interaction(conn_db):
             # Выход.
             Colors.print_blue(GOODBYE_MESSAGE)
             break
+        else:
+            Colors.print_red(ERROR_MESSAGE)
 
 
 if __name__ == "__main__":
