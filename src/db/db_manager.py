@@ -64,7 +64,7 @@ class DBManager:
         try:
             with self.conn:
                 with self.conn.cursor() as cursor:
-                    query = "SELECT * FROM vacancies WHERE name LIKE %s"
+                    query = "SELECT name, url FROM vacancies WHERE name LIKE %s"
                     formatted_keyword = f"%{keyword}%"
                     cursor.execute(query, (formatted_keyword,))
                     rows = cursor.fetchall()

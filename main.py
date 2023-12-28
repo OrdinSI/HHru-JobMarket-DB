@@ -1,9 +1,7 @@
 import logging
 import os
-
 import psycopg2
 from dotenv import load_dotenv
-
 from src.api.hh_api import HeadHunterApi
 from src.db.db_manager import DBManager
 from src.db.db_save import DBSave
@@ -44,13 +42,17 @@ def user_interaction(conn_db):
         if choice == "1":
             # Выводим список компаний
             employers_names = db_manager.get_companies()
-            Colors.print_magenta(LIST_EMPLOYERS.format(employers_names))
+            for employer in employers_names:
+                Colors.print_blue(LIST_EMPLOYERS.format(employer[0]))
             continue
 
         if choice == "2":
             # Добавление компаний
             search_query = Colors.input_cyan(ADD_EMPLOYER)
             request_e = search_query.lower().split()
+            if len(request_e) > 10:
+                Colors.print_red(NUMBER_ERROR)
+                continue
             hh_api = HeadHunterApi()
             data_employer = hh_api.get_employer(request_e)
             if not data_employer:
@@ -86,37 +88,48 @@ def user_interaction(conn_db):
                 Colors.print_red(ERROR_ADD_VACANCIES)
                 continue
 
-            Colors.print_magenta(ADD_SUCCESS)
+            Colors.print_blue(ADD_SUCCESS)
             continue
 
         if choice == "3":
+            # Список всех компаний и количество вакансий у каждой компании.
             open_vacancies = db_manager.get_companies_and_vacancies_count()
-            Colors.print_magenta(LIST_EMPLOYERS_OPEN_VACANCIES.format(open_vacancies))
+            for company in open_vacancies:
+                Colors.print_blue(LIST_EMPLOYERS_OPEN_VACANCIES.format(company[0], company[1]))
             continue
 
         if choice == "4":
+            # Список всех вакансий с указанием названия компании, названия вакансии, зарплаты и ссылки на вакансию.
             vacancies_data = db_manager.get_all_vacancies()
-            Colors.print_magenta(ALL_VACANCIES.format(vacancies_data))
+            for vacancy in vacancies_data:
+                Colors.print_blue(ALL_VACANCIES.format(vacancy[0], vacancy[1], vacancy[2], vacancy[3]))
             continue
 
         if choice == "5":
+            # Средняя зарплата по вакансиям.
             avg_salary = db_manager.get_avg_salary()
-            Colors.print_magenta(AVG_SALARY.format(avg_salary))
+            for salary in avg_salary:
+                Colors.print_blue(AVG_SALARY.format(round(salary[0])))
             continue
 
         if choice == "6":
+            # Список всех вакансий, у которых зарплата выше средней по всем вакансиям.
             avg_vacancies = db_manager.get_vacancies_with_higher_salary()
-            Colors.print_magenta(AVG_VACANCIES.format(avg_vacancies))
+            for vacancy in avg_vacancies:
+                Colors.print_blue(AVG_VACANCIES.format(vacancy[0]))
             continue
 
         if choice == "7":
-            keyword = Colors.input_cyan("Пожалуйста, введите ваш поисковый запрос: ")
+            # Поиск по ключевому слову в описании вакансий.
+            keyword = Colors.input_cyan(ENTER_QUERY)
             name_vacancies = db_manager.get_vacancies_with_keyword(keyword)
-            Colors.print_magenta(VACANCIES_KEYWORD.format(name_vacancies))
+            for vacancy in name_vacancies:
+                Colors.print_blue(VACANCIES_KEYWORD.format(vacancy[0], vacancy[1]))
             continue
 
         if choice == "8":
-            Colors.print_magenta(GOODBYE_MESSAGE)
+            # Выход.
+            Colors.print_blue(GOODBYE_MESSAGE)
             break
 
 
