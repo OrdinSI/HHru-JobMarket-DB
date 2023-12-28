@@ -23,7 +23,7 @@ class HeadHunterApi(Api):
                 else:
                     logging.error(f"Запрос {request} вернул статус {res.status_code}")
             return vacancies
-        except Exception as e:
+        except ConnectionError as e:
             logging.error(f"Ошибка при получении вакансий с HeadHunter: {e}")
 
     def get_employer(self, requests_e: List[str]) -> Dict[str, Any]:
@@ -39,5 +39,5 @@ class HeadHunterApi(Api):
                 else:
                     logging.error(f"Запрос {request} вернул статус {res.status_code}")
             return employers
-        except Exception as e:
+        except ConnectionError as e:
             logging.error(f"Ошибка при получении id компаний с HeadHunter: {e}")

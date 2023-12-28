@@ -44,9 +44,8 @@ def user_interaction(conn_db):
             employers_names = db_manager.get_companies()
             for employer in employers_names:
                 Colors.print_blue(LIST_EMPLOYERS.format(employer[0]))
-            continue
 
-        if choice == "2":
+        elif choice == "2":
             # Добавление компаний
             search_query = Colors.input_cyan(ADD_EMPLOYER)
             request_e = search_query.lower().split()
@@ -89,45 +88,39 @@ def user_interaction(conn_db):
                 continue
 
             Colors.print_blue(ADD_SUCCESS)
-            continue
 
-        if choice == "3":
+        elif choice == "3":
             # Список всех компаний и количество вакансий у каждой компании.
             open_vacancies = db_manager.get_companies_and_vacancies_count()
             for company in open_vacancies:
                 Colors.print_blue(LIST_EMPLOYERS_OPEN_VACANCIES.format(company[0], company[1]))
-            continue
 
-        if choice == "4":
+        elif choice == "4":
             # Список всех вакансий с указанием названия компании, названия вакансии, зарплаты и ссылки на вакансию.
             vacancies_data = db_manager.get_all_vacancies()
             for vacancy in vacancies_data:
                 Colors.print_blue(ALL_VACANCIES.format(vacancy[0], vacancy[1], vacancy[2], vacancy[3]))
-            continue
 
-        if choice == "5":
+        elif choice == "5":
             # Средняя зарплата по вакансиям.
             avg_salary = db_manager.get_avg_salary()
             for salary in avg_salary:
                 Colors.print_blue(AVG_SALARY.format(round(salary[0])))
-            continue
 
-        if choice == "6":
+        elif choice == "6":
             # Список всех вакансий, у которых зарплата выше средней по всем вакансиям.
             avg_vacancies = db_manager.get_vacancies_with_higher_salary()
             for vacancy in avg_vacancies:
                 Colors.print_blue(AVG_VACANCIES.format(vacancy[0]))
-            continue
 
-        if choice == "7":
+        elif choice == "7":
             # Поиск по ключевому слову в описании вакансий.
             keyword = Colors.input_cyan(ENTER_QUERY)
             name_vacancies = db_manager.get_vacancies_with_keyword(keyword)
             for vacancy in name_vacancies:
                 Colors.print_blue(VACANCIES_KEYWORD.format(vacancy[0], vacancy[1]))
-            continue
 
-        if choice == "8":
+        elif choice == "8":
             # Выход.
             Colors.print_blue(GOODBYE_MESSAGE)
             break
