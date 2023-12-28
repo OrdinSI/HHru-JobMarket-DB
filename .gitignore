@@ -1,7 +1,4 @@
-1.py
-temp_downloaded_file.jpg
-frequent_words.txt
-no_match_questions.txt
+job_explorer.log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
